@@ -1,0 +1,478 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   CSS CUSTOM PROPERTIES
+============================================= */
+@layer base {
+  :root {
+    --rainbow: linear-gradient(
+      90deg,
+      #EF4444,
+      #F97316,
+      #EAB308,
+      #22C55E,
+      #3B82F6,
+      #6366F1,
+      #A855F7
+    );
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-nunito), 'Nunito', sans-serif;
+    background-color: #C8E6F5;
+    color: #1E3A5F;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+}
+
+/* =============================================
+   RAINBOW UTILITIES
+============================================= */
+.rainbow-gradient {
+  background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
+}
+
+.rainbow-divider {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
+}
+
+.card-rainbow-top {
+  height: 6px;
+  background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
+}
+
+/* =============================================
+   SCROLL FADE-IN
+============================================= */
+.fade-in {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.05s; }
+.delay-2 { transition-delay: 0.15s; }
+.delay-3 { transition-delay: 0.25s; }
+.delay-4 { transition-delay: 0.35s; }
+
+/* =============================================
+   FLOATING CLOUDS — Hero background
+============================================= */
+.cloud-group {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cloud-group::before,
+.cloud-group::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* Cloud A */
+.cloud-a {
+  width: 120px; height: 50px;
+  background: rgba(255, 255, 255, 0.50);
+  border-radius: 60px;
+  top: 12%; left: 5%;
+  animation: float-cloud 18s ease-in-out infinite;
+}
+.cloud-a::before {
+  width: 60px; height: 60px;
+  top: -28px; left: 15px;
+  background: rgba(255, 255, 255, 0.50);
+}
+.cloud-a::after {
+  width: 45px; height: 45px;
+  top: -20px; left: 52px;
+  background: rgba(255, 255, 255, 0.50);
+}
+
+/* Cloud B */
+.cloud-b {
+  width: 180px; height: 70px;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 70px;
+  top: 20%; right: 8%;
+  animation: float-cloud 24s ease-in-out infinite reverse;
+}
+.cloud-b::before {
+  width: 90px; height: 90px;
+  top: -42px; left: 20px;
+  background: rgba(255, 255, 255, 0.45);
+}
+.cloud-b::after {
+  width: 70px; height: 70px;
+  top: -30px; left: 85px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Cloud C */
+.cloud-c {
+  width: 90px; height: 40px;
+  background: rgba(255, 255, 255, 0.40);
+  border-radius: 50px;
+  top: 55%; left: 3%;
+  animation: float-cloud 20s ease-in-out infinite 4s;
+}
+.cloud-c::before {
+  width: 50px; height: 50px;
+  top: -24px; left: 10px;
+  background: rgba(255, 255, 255, 0.40);
+}
+.cloud-c::after {
+  width: 38px; height: 38px;
+  top: -16px; left: 42px;
+  background: rgba(255, 255, 255, 0.40);
+}
+
+/* Cloud D */
+.cloud-d {
+  width: 150px; height: 60px;
+  background: rgba(255, 255, 255, 0.38);
+  border-radius: 60px;
+  top: 70%; right: 5%;
+  animation: float-cloud 22s ease-in-out infinite 8s reverse;
+}
+.cloud-d::before {
+  width: 75px; height: 75px;
+  top: -35px; left: 18px;
+  background: rgba(255, 255, 255, 0.38);
+}
+.cloud-d::after {
+  width: 55px; height: 55px;
+  top: -25px; left: 74px;
+  background: rgba(255, 255, 255, 0.38);
+}
+
+/* Cloud E */
+.cloud-e {
+  width: 100px; height: 42px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 50px;
+  top: 40%; left: 55%;
+  animation: float-cloud 16s ease-in-out infinite 2s;
+}
+.cloud-e::before {
+  width: 52px; height: 52px;
+  top: -25px; left: 12px;
+  background: rgba(255, 255, 255, 0.35);
+}
+.cloud-e::after {
+  width: 40px; height: 40px;
+  top: -18px; left: 48px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Cloud F */
+.cloud-f {
+  width: 200px; height: 75px;
+  background: rgba(255, 255, 255, 0.30);
+  border-radius: 75px;
+  bottom: 18%; left: 20%;
+  animation: float-cloud 28s ease-in-out infinite 5s;
+}
+.cloud-f::before {
+  width: 100px; height: 100px;
+  top: -48px; left: 25px;
+  background: rgba(255, 255, 255, 0.30);
+}
+.cloud-f::after {
+  width: 75px; height: 75px;
+  top: -33px; left: 100px;
+  background: rgba(255, 255, 255, 0.30);
+}
+
+/* =============================================
+   KEYFRAME ANIMATIONS
+============================================= */
+@keyframes float-cloud {
+  0%   { transform: translateX(0)    translateY(0);   }
+  25%  { transform: translateX(18px) translateY(-10px); }
+  50%  { transform: translateX(35px) translateY(5px);  }
+  75%  { transform: translateX(15px) translateY(-7px); }
+  100% { transform: translateX(0)    translateY(0);   }
+}
+
+@keyframes bounce-emoji {
+  0%, 100% { transform: translateY(0)    rotate(0deg);  }
+  40%       { transform: translateY(-12px) rotate(-5deg); }
+  60%       { transform: translateY(-8px)  rotate(5deg);  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1);   opacity: 1;   }
+  50%       { transform: scale(1.4); opacity: 0.7; }
+}
+
+@keyframes pulse-button {
+  0%, 100% {
+    box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 8px 40px rgba(37, 211, 102, 0.55);
+    transform: scale(1.01);
+  }
+}
+
+/* =============================================
+   ANIMATION HELPER CLASSES
+============================================= */
+.animate-bounce-emoji {
+  display: inline-block;
+  animation: bounce-emoji 2.5s ease-in-out infinite;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.btn-wa-pulse {
+  animation: pulse-button 3s ease-in-out infinite;
+}
+.btn-wa-pulse:hover {
+  animation: none;
+  transform: translateY(-4px) scale(1.04) !important;
+  box-shadow: 0 16px 40px rgba(37, 211, 102, 0.45) !important;
+}
+
+/* =============================================
+   FROSTED GLASS NAVBAR
+============================================= */
+.navbar-glass {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(200, 230, 245, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* =============================================
+   MOBILE MENU RAINBOW BORDER
+============================================= */
+.mobile-menu-rainbow {
+  border-bottom: 4px solid transparent;
+  border-image: linear-gradient(
+    90deg,
+    #EF4444, #F97316, #EAB308,
+    #22C55E, #3B82F6, #6366F1, #A855F7
+  ) 1;
+}
+
+/* =============================================
+   CONTACT BOX DECORATIVE CLOUDS
+============================================= */
+.contact-cloud-1 {
+  position: absolute;
+  background: #C8E6F5;
+  border-radius: 50%;
+  opacity: 0.4;
+  pointer-events: none;
+  width: 120px;
+  height: 120px;
+  top: -30px;
+  right: -30px;
+}
+
+.contact-cloud-2 {
+  position: absolute;
+  background: #C8E6F5;
+  border-radius: 50%;
+  opacity: 0.4;
+  pointer-events: none;
+  width: 80px;
+  height: 80px;
+  bottom: 20px;
+  left: -20px;
+}
+
+/* =============================================
+   GALLERY MASONRY
+============================================= */
+.gallery-masonry {
+  columns: 3;
+  column-gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .gallery-masonry {
+    columns: 2;
+    column-gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-masonry {
+    columns: 1;
+  }
+}
+
+/* =============================================
+   WHY BUBBLE ACCENT BORDERS
+============================================= */
+.why-bubble-1 { border-top: 5px solid #F97316; }
+.why-bubble-2 { border-top: 5px solid #3B82F6; }
+.why-bubble-3 { border-top: 5px solid #22C55E; }
+.why-bubble-4 { border-top: 5px solid #A855F7; }
+
+/* =============================================
+   EVENTS BANNER OVERLAY
+============================================= */
+.events-banner-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+}
+
+/* =============================================
+   PHOTO CARDS — Workshop bento grid
+============================================= */
+.workshop-bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.workshop-bento .bento-wide {
+  grid-column: span 2;
+}
+
+.w-card-photo {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  display: block;
+  box-shadow: 0 6px 28px rgba(30, 58, 95, 0.09);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.w-card-photo .card-photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+
+.w-card-photo:hover .card-photo-img {
+  transform: scale(1.08);
+}
+
+.card-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.65) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-photo-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 18px 22px 22px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-price-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  background: #fff;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: var(--font-fredoka), 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.badge-rainbow {
+  background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
+  color: #fff;
+}
+
+/* Featured card — rainbow border via gradient padding wrapper */
+.featured-photo-wrap {
+  padding: 3px;
+  border-radius: 35px;
+  background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
+  box-shadow: 0 6px 28px rgba(30, 58, 95, 0.09);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.featured-photo-wrap:hover {
+  transform: translateY(-9px);
+  box-shadow: 0 20px 50px rgba(30, 58, 95, 0.18);
+}
+
+.featured-photo-wrap:hover .card-photo-img {
+  transform: scale(1.08);
+}
+
+.featured-photo-wrap .w-card-photo {
+  box-shadow: none;
+  height: 100%;
+}
+
+/* Hover variants */
+.w-card-photo.hover-lift:hover {
+  transform: translateY(-9px);
+  box-shadow: 0 20px 50px rgba(30, 58, 95, 0.18);
+}
+
+.w-card-photo.hover-rotate:hover {
+  transform: translateY(-5px) rotate(1.5deg);
+  box-shadow: 0 18px 44px rgba(30, 58, 95, 0.16);
+}
+
+.w-card-photo.hover-scale:hover {
+  transform: scale(1.03);
+  box-shadow: 0 18px 40px rgba(30, 58, 95, 0.15);
+}
+
+/* Tilt variants */
+.w-card-photo.tilt-l { transform: rotate(-1.1deg); }
+.w-card-photo.tilt-r { transform: rotate(0.9deg); }
+
+.w-card-photo.tilt-l:hover,
+.w-card-photo.tilt-r:hover {
+  transform: rotate(0deg) translateY(-8px);
+  box-shadow: 0 18px 44px rgba(30, 58, 95, 0.16);
+}
+
+@media (max-width: 900px) {
+  .workshop-bento { grid-template-columns: repeat(2, 1fr); }
+  .workshop-bento .bento-wide { grid-column: span 2; }
+}
+
+@media (max-width: 600px) {
+  .workshop-bento { grid-template-columns: 1fr; }
+  .workshop-bento .bento-wide { grid-column: span 1; }
+  .w-card-photo { height: 260px; }
+  .w-card-photo.tilt-l, .w-card-photo.tilt-r { transform: none; }
+}
