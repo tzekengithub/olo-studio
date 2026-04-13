@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OLO Studio — DIY Workshops in Penang</title>
+  <meta name="description" content="Hands-on creative workshops in Penang. Plushy making, tufting, keychains, batik, pottery and more. All skill levels welcome." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       VARIABLES & RESET
+    ============================================= */
+    :root {
+      --sky: #C8E6F5;
+      --sky-dark: #a8d4ee;
+      --sky-light: #E3F3FB;
+      --offwhite: #FAFAF8;
+      --white: #FFFFFF;
+      --navy: #1E3A5F;
+      --red: #EF4444;
+      --orange: #F97316;
+      --yellow: #EAB308;
+      --green: #22C55E;
+      --blue: #3B82F6;
+      --indigo: #6366F1;
+      --purple: #A855F7;
+      --text-dark: #1E3A5F;
+      --text-sub: #5A7A9A;
+      --rainbow: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--sky);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.22s; }
+    .fade-in-delay-3 { transition-delay: 0.34s; }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 12px 0;
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background: rgba(200, 230, 245, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+      transition: box-shadow 0.3s;
+    }
+    #navbar.scrolled { box-shadow: 0 4px 24px rgba(30,58,95,0.10); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo svg { width: 44px; height: 44px; flex-shrink: 0; }
+    .nav-logo-text { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.45rem; color: var(--text-dark); letter-spacing: 0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 6px; list-style: none; }
+    .nav-links a { font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 1rem; color: var(--text-dark); text-decoration: none; padding: 8px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s; }
+    .nav-links a:hover { background: var(--white); color: var(--blue); }
+    .nav-cta { background: var(--text-dark) !important; color: var(--white) !important; }
+    .nav-cta:hover { background: var(--blue) !important; color: var(--white) !important; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border-radius: 12px; background: var(--white); border: none; }
+    .nav-hamburger span { display: block; width: 22px; height: 2.5px; background: var(--text-dark); border-radius: 2px; transition: all 0.3s; }
+    .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(200,230,245,0.97); backdrop-filter: blur(20px); padding: 20px 24px 28px; border-bottom: 4px solid transparent; border-image: var(--rainbow) 1; z-index: 999; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--text-dark); text-decoration: none; padding: 14px 0; border-bottom: 1px solid rgba(30,58,95,0.1); }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      padding-top: 88px;
+      overflow: hidden;
+      background-color: var(--sky);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* Clouds — each with its own speed */
+    .hero-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+    .cloud-group { position: absolute; }
+    .cloud-group::before, .cloud-group::after { content: ''; position: absolute; border-radius: 50%; }
+
+    .cloud-a { width: 120px; height: 50px; background: rgba(255,255,255,0.5); border-radius: 60px; top: 12%; left: 5%; animation: floatcloud 18s ease-in-out infinite; }
+    .cloud-a::before { width:60px; height:60px; top:-28px; left:15px; background: inherit; }
+    .cloud-a::after  { width:45px; height:45px; top:-20px; left:52px; background: inherit; }
+
+    .cloud-b { width: 180px; height: 70px; background: rgba(255,255,255,0.42); border-radius: 70px; top: 18%; right: 8%; animation: floatcloud 31s ease-in-out infinite reverse; }
+    .cloud-b::before { width:90px; height:90px; top:-42px; left:20px; background: inherit; }
+    .cloud-b::after  { width:70px; height:70px; top:-30px; left:85px; background: inherit; }
+
+    .cloud-c { width: 90px; height: 40px; background: rgba(255,255,255,0.38); border-radius: 50px; top: 55%; left: 3%; animation: floatcloud 23s ease-in-out infinite 4s; }
+    .cloud-c::before { width:50px; height:50px; top:-24px; left:10px; background: inherit; }
+    .cloud-c::after  { width:38px; height:38px; top:-16px; left:42px; background: inherit; }
+
+    .cloud-d { width: 150px; height: 60px; background: rgba(255,255,255,0.35); border-radius: 60px; top: 68%; right: 5%; animation: floatcloud 27s ease-in-out infinite 9s reverse; }
+    .cloud-d::before { width:75px; height:75px; top:-35px; left:18px; background: inherit; }
+    .cloud-d::after  { width:55px; height:55px; top:-25px; left:74px; background: inherit; }
+
+    .cloud-e { width: 100px; height: 42px; background: rgba(255,255,255,0.32); border-radius: 50px; top: 38%; left: 55%; animation: floatcloud 14s ease-in-out infinite 2s; }
+    .cloud-e::before { width:52px; height:52px; top:-25px; left:12px; background: inherit; }
+    .cloud-e::after  { width:40px; height:40px; top:-18px; left:48px; background: inherit; }
+
+    .cloud-f { width: 200px; height: 75px; background: rgba(255,255,255,0.28); border-radius: 75px; bottom: 20%; left: 20%; animation: floatcloud 38s ease-in-out infinite 6s; }
+    .cloud-f::before { width:100px; height:100px; top:-48px; left:25px; background: inherit; }
+    .cloud-f::after  { width:75px; height:75px; top:-33px; left:100px; background: inherit; }
+
+    @keyframes floatcloud {
+      0%   { transform: translateX(0) translateY(0); }
+      25%  { transform: translateX(18px) translateY(-10px); }
+      50%  { transform: translateX(34px) translateY(5px); }
+      75%  { transform: translateX(14px) translateY(-6px); }
+      100% { transform: translateX(0) translateY(0); }
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 48px 24px 110px;
+    }
+
+    .hero-est-tag {
+      display: inline-block;
+      background: white;
+      color: var(--text-sub);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 18px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+      box-shadow: 0 3px 12px rgba(30,58,95,0.10);
+      transform: rotate(-1deg);
+      display: inline-block;
+    }
+    .hero-est-tag span {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-right: 7px;
+      animation: pulse-dot 2s ease-in-out infinite;
+      vertical-align: middle;
+      margin-bottom: 1px;
+    }
+    @keyframes pulse-dot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.7} }
+
+    .hero-headline-wrap {
+      display: inline-block;
+      transform: rotate(-1.5deg);
+      margin-bottom: 22px;
+    }
+
+    .hero-headline {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(3.4rem, 9.5vw, 7rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-headline .emoji {
+      display: inline-block;
+      animation: bounce-emoji 2.8s ease-in-out infinite;
+    }
+    @keyframes bounce-emoji {
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      40%{transform:translateY(-14px) rotate(-6deg)}
+      60%{transform:translateY(-9px) rotate(5deg)}
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: var(--text-sub);
+      font-weight: 300;
+      margin-bottom: 40px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* hand-drawn arrow pointing at button */
+    .hero-arrow {
+      position: absolute;
+      bottom: -54px;
+      right: -80px;
+      width: 80px;
+      opacity: 0.7;
+      pointer-events: none;
+      transform: rotate(-10deg);
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--text-dark);
+      color: var(--white);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem; font-weight: 700;
+      padding: 17px 34px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 7px 22px rgba(30,58,95,0.22);
+    }
+    .btn-primary:hover { background: #22C55E; transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 32px rgba(34,197,94,0.38); }
+
+    .hero-secondary-link {
+      display: block;
+      margin-top: 18px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-sub);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .hero-secondary-link:hover { color: var(--text-dark); }
+
+    .hero-rainbow-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 10px; background: var(--rainbow); z-index: 2; }
+
+    /* =============================================
+       WORKSHOPS — BENTO GRID
+    ============================================= */
+    #workshops {
+      padding: 80px 0 70px;
+      background: var(--sky);
+    }
+
+    .workshops-heading {
+      margin-bottom: 44px;
+      padding-left: 4px;
+    }
+
+    .workshops-heading h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+      font-weight: 400;
+      color: var(--text-dark);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .workshops-heading p {
+      font-size: 1rem;
+      color: var(--text-sub);
+      font-weight: 300;
+      margin-top: 6px;
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    /* span helpers */
+    .bento-wide { grid-column: span 2; }
+
+    /* Base card */
+    .w-card {
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 28px rgba(30,58,95,0.09);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    /* ---- Card style variants ---- */
+
+    /* White + colored top border */
+    .w-card-white { background: var(--white); }
+    .w-card-white .card-color-bar { height: 5px; }
+    .bar-orange { background: var(--orange); }
+    .bar-indigo { background: var(--indigo); }
+    .bar-pink   { background: #F472B6; }
+    .bar-green  { background: var(--green); }
+    .bar-blue   { background: var(--blue); }
+    .bar-purple { background: var(--purple); }
+    .bar-yellow { background: var(--yellow); }
+    .bar-red    { background: var(--red); }
+    .bar-rainbow { background: var(--rainbow); }
+
+    /* Pastel tinted */
+    .w-card-pastel-yellow { background: #FFFBEB; }
+    .w-card-pastel-mint   { background: #ECFDF5; }
+    .w-card-pastel-lavender { background: #F5F3FF; }
+    .w-card-pastel-peach  { background: #FFF7ED; }
+
+    /* Dark featured card */
+    .w-card-dark {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 32px;
+    }
+    .w-card-dark .card-title { color: var(--white); }
+    .w-card-dark .card-desc  { color: rgba(255,255,255,0.72); }
+    .w-card-dark .price-from { color: rgba(255,255,255,0.55); }
+    .w-card-dark .price-amount { color: var(--white); }
+
+    /* Subtle tilt on a few */
+    .tilt-l { transform: rotate(-1.1deg); }
+    .tilt-r { transform: rotate(0.9deg); }
+    .tilt-l:hover { transform: rotate(0deg) translateY(-8px); box-shadow: 0 18px 44px rgba(30,58,95,0.16); }
+    .tilt-r:hover { transform: rotate(0deg) translateY(-8px); box-shadow: 0 18px 44px rgba(30,58,95,0.16); }
+
+    /* Hover variants */
+    .hover-lift:hover    { transform: translateY(-9px); box-shadow: 0 20px 50px rgba(30,58,95,0.18); }
+    .hover-rotate:hover  { transform: translateY(-5px) rotate(1.5deg); box-shadow: 0 18px 44px rgba(30,58,95,0.16); }
+    .hover-scale:hover   { transform: scale(1.03); box-shadow: 0 18px 40px rgba(30,58,95,0.15); }
+    .hover-flash:hover   { background: #EEF6FF; transform: translateY(-6px); box-shadow: 0 16px 42px rgba(59,130,246,0.18); }
+    .hover-glow:hover    { transform: translateY(-7px); box-shadow: 0 18px 44px rgba(30,58,95,0.22), 0 0 0 3px rgba(37,211,102,0.25); }
+
+    /* Card inner layout */
+    .card-inner {
+      padding: 28px 26px 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Featured card has larger inner padding + decoration area */
+    .featured-inner {
+      padding: 32px 30px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Decorative plushie SVG in featured card */
+    .featured-deco {
+      position: absolute;
+      top: 18px; right: 20px;
+      width: 72px; height: 72px;
+      opacity: 0.22;
+    }
+
+    .card-emoji {
+      font-size: 2.6rem;
+      margin-bottom: 12px;
+      display: block;
+      line-height: 1;
+    }
+
+    .card-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 9px;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .card-desc {
+      font-size: 0.93rem;
+      color: var(--text-sub);
+      font-weight: 400;
+      line-height: 1.62;
+      flex: 1;
+      margin-bottom: 18px;
+    }
+
+    .card-price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+
+    .price-from { font-size: 0.82rem; color: var(--text-sub); font-weight: 600; }
+    .price-amount { font-family: 'Fredoka', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--text-dark); }
+    .price-custom { font-family: 'Fredoka', sans-serif; font-size: 1.25rem; font-weight: 600; color: var(--purple); }
+
+    .w-card-dark .price-custom { color: #C4B5FD; }
+
+    /* WhatsApp button */
+    .btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: #25D366;
+      color: var(--white);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.97rem; font-weight: 600;
+      padding: 13px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(37,211,102,0.28);
+      margin-top: auto;
+    }
+    .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.42); }
+    .btn-wa svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* =============================================
+       VIBE SECTION
+    ============================================= */
+    #vibe {
+      background: var(--offwhite);
+      padding: 64px 0 60px;
+    }
+
+    .vibe-label {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 36px;
+      padding-left: 4px;
+    }
+
+    .vibe-scatter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .vibe-item {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 22px 26px;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.07);
+    }
+    .vibe-item:nth-child(1) { flex: 0 1 220px; transform: rotate(-1deg); border-top: 4px solid var(--orange); }
+    .vibe-item:nth-child(2) { flex: 0 1 280px; border-top: 4px solid var(--blue); }
+    .vibe-item:nth-child(3) { flex: 0 1 200px; transform: rotate(0.8deg); border-top: 4px solid var(--green); }
+    .vibe-item:nth-child(4) { flex: 0 1 250px; transform: rotate(-0.5deg); border-top: 4px solid var(--purple); }
+
+    .vibe-emoji { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+    .vibe-strong {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: block;
+      margin-bottom: 5px;
+    }
+    .vibe-text {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    /* =============================================
+       EVENTS BANNER
+    ============================================= */
+    #events { padding: 0; }
+
+    .rainbow-stripe-thick {
+      height: 8px;
+      background: var(--rainbow);
+    }
+
+    .events-banner {
+      background: var(--navy);
+      padding: 44px 24px;
+      text-align: center;
+    }
+
+    .events-banner-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .events-banner-sub {
+      font-size: 0.97rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 300;
+      max-width: 460px;
+      margin: 0 auto 22px;
+    }
+
+    .btn-outline-white {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid rgba(255,255,255,0.5);
+      color: var(--white);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      padding: 11px 26px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.8); }
+
+    /* =============================================
+       INSTAGRAM / FOLLOW US
+    ============================================= */
+    #follow {
+      background: var(--sky);
+      padding: 64px 0 56px;
+      text-align: center;
+    }
+
+    .follow-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    .follow-sub {
+      font-size: 0.97rem;
+      color: var(--text-sub);
+      font-weight: 300;
+      margin-bottom: 26px;
+    }
+
+    .follow-handle {
+      display: inline-block;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      background: var(--white);
+      padding: 12px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 6px 22px rgba(30,58,95,0.10);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .follow-handle:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(30,58,95,0.16); }
+
+    /* decorative emoji row */
+    .follow-emojis {
+      margin-top: 28px;
+      font-size: 1.9rem;
+      letter-spacing: 0.3em;
+      opacity: 0.65;
+    }
+
+    /* =============================================
+       CONTACT
+    ============================================= */
+    #contact {
+      padding: 72px 0 80px;
+      background: #dceefb;
+    }
+
+    .contact-box {
+      background: var(--white);
+      border-radius: 36px;
+      padding: 60px 48px;
+      text-align: center;
+      box-shadow: 0 8px 36px rgba(30,58,95,0.10);
+      max-width: 660px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--rainbow); }
+
+    .contact-emoji { font-size: 3.8rem; display: block; margin-bottom: 18px; animation: bounce-emoji 3s ease-in-out infinite; }
+
+    .contact-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .contact-sub { font-size: 0.97rem; color: var(--text-sub); font-weight: 400; margin-bottom: 34px; max-width: 400px; margin-left: auto; margin-right: auto; }
+
+    .btn-wa-big {
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+      background: #25D366; color: var(--white);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.25rem; font-weight: 700;
+      padding: 19px 46px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+      animation: pulse-button 3s ease-in-out infinite;
+      margin-bottom: 32px;
+    }
+    .btn-wa-big:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 16px 42px rgba(37,211,102,0.48); animation: none; }
+    .btn-wa-big svg { width: 26px; height: 26px; }
+
+    @keyframes pulse-button {
+      0%,100%{ box-shadow: 0 8px 28px rgba(37,211,102,0.35); }
+      50%{ box-shadow: 0 10px 40px rgba(37,211,102,0.55); transform: scale(1.01); }
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 8px; }
+    .contact-info-item { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.93rem; color: var(--text-sub); font-weight: 500; }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer { background: var(--sky); padding: 32px 24px; text-align: center; }
+    .footer-rainbow { height: 8px; background: var(--rainbow); margin-bottom: 28px; }
+    .footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; text-decoration: none; }
+    .footer-logo-text { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--text-dark); }
+    .footer-copy { font-size: 0.88rem; color: var(--text-sub); font-weight: 400; }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 900px) {
+      .bento { grid-template-columns: repeat(2, 1fr); }
+      .bento-wide { grid-column: span 2; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-arrow { display: none; }
+      .hero-headline { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+
+      .vibe-scatter { gap: 14px; }
+      .vibe-item:nth-child(n) { flex: 0 1 100%; transform: none !important; }
+
+      .contact-box { padding: 44px 26px; }
+      .btn-wa-big { font-size: 1.1rem; padding: 17px 32px; }
+    }
+
+    @media (max-width: 600px) {
+      .bento { grid-template-columns: 1fr; }
+      .bento-wide { grid-column: span 1; }
+      .tilt-l, .tilt-r { transform: none; }
+      .hero-content { padding: 32px 20px 100px; }
+    }
+
+    /* Stagger helpers */
+    .s1 { transition-delay: 0.04s; }
+    .s2 { transition-delay: 0.12s; }
+    .s3 { transition-delay: 0.20s; }
+    .s4 { transition-delay: 0.28s; }
+    .s5 { transition-delay: 0.36s; }
+    .s6 { transition-delay: 0.44s; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======================== NAVBAR ======================== -->
+  <nav id="navbar">
+    <div class="container nav-inner">
+      <a href="#hero" class="nav-logo">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="24" fill="#C8E6F5"/>
+          <ellipse cx="24" cy="22" rx="13" ry="8" fill="white"/>
+          <circle cx="17" cy="20" r="6" fill="white"/>
+          <circle cx="24" cy="17" r="7" fill="white"/>
+          <circle cx="31" cy="20" r="5.5" fill="white"/>
+          <rect x="11" y="28" width="4" height="4" rx="1" fill="#EF4444"/>
+          <rect x="15.5" y="28" width="4" height="4" rx="1" fill="#F97316"/>
+          <rect x="20" y="28" width="4" height="4" rx="1" fill="#EAB308"/>
+          <rect x="24.5" y="28" width="4" height="4" rx="1" fill="#22C55E"/>
+          <rect x="29" y="28" width="4" height="4" rx="1" fill="#3B82F6"/>
+          <rect x="33.5" y="28" width="4" height="4" rx="1" fill="#A855F7"/>
+        </svg>
+        <span class="nav-logo-text">OLO STUDIO</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#workshops">Workshops</a></li>
+        <li><a href="#contact" class="nav-cta">Book Now</a></li>
+      </ul>
+
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#hero"      onclick="closeMobile()">🏠 Home</a>
+    <a href="#workshops" onclick="closeMobile()">🧸 Workshops</a>
+    <a href="#contact"   onclick="closeMobile()">📱 Book Now</a>
+  </div>
+
+
+  <!-- ======================== HERO ======================== -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="cloud-group cloud-a"></div>
+      <div class="cloud-group cloud-b"></div>
+      <div class="cloud-group cloud-c"></div>
+      <div class="cloud-group cloud-d"></div>
+      <div class="cloud-group cloud-e"></div>
+      <div class="cloud-group cloud-f"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-est-tag fade-in">
+        <span></span> est. Penang 🌴
+      </div>
+
+      <div class="hero-headline-wrap fade-in fade-in-delay-1">
+        <h1 class="hero-headline">
+          make something<br>
+          you'll love <span class="emoji">🧸</span>
+        </h1>
+      </div>
+
+      <p class="hero-sub fade-in fade-in-delay-2">
+        hands-on creative workshops in penang.<br>
+        all skill levels, all ages, all materials included.
+      </p>
+
+      <div class="fade-in fade-in-delay-3">
+        <div class="hero-cta-wrap">
+          <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-primary">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Book a Workshop
+          </a>
+
+          <!-- hand-drawn arrow pointing at button -->
+          <svg class="hero-arrow" viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 8 C22 4, 68 26, 74 54" stroke="#1E3A5F" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M66 58 L74 54 L68 46" stroke="#1E3A5F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M10 8 C11 6, 14 9, 12 11" stroke="#1E3A5F" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+
+        <a href="#workshops" class="hero-secondary-link">see what's on ↓</a>
+      </div>
+    </div>
+
+    <div class="hero-rainbow-bottom"></div>
+  </section>
+
+
+  <!-- ======================== WORKSHOPS ======================== -->
+  <section id="workshops">
+    <div class="container">
+      <div class="workshops-heading fade-in">
+        <h2>things you can make 🎨</h2>
+        <p>pick something, show up, take it home.</p>
+      </div>
+
+      <div class="bento">
+
+        <!-- 1. Build-A-Plushie — FEATURED, dark, span 2 -->
+        <div class="w-card w-card-dark bento-wide hover-lift fade-in s1" style="border-radius:32px; min-height:240px;">
+          <div class="featured-inner">
+            <!-- decorative plushie SVG -->
+            <svg class="featured-deco" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="46" r="26" fill="white"/>
+              <circle cx="22" cy="28" r="13" fill="white"/>
+              <circle cx="58" cy="28" r="13" fill="white"/>
+              <circle cx="28" cy="52" r="6" fill="#C8E6F5"/>
+              <circle cx="52" cy="52" r="6" fill="#C8E6F5"/>
+              <circle cx="40" cy="58" r="4" fill="#C8E6F5"/>
+              <circle cx="34" cy="43" r="3" fill="#1E3A5F"/>
+              <circle cx="46" cy="43" r="3" fill="#1E3A5F"/>
+            </svg>
+            <span class="card-emoji">🧸</span>
+            <h3 class="card-title">Build-A-Plushie</h3>
+            <p class="card-desc">Pick your character, stuff it, sew it, name it. Take home your new best friend.</p>
+            <div class="card-price">
+              <span class="price-from">from&nbsp;</span>
+              <span class="price-amount">RM98</span>
+            </div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Book Now
+            </a>
+          </div>
+        </div>
+
+        <!-- 2. Tufting Workshop -->
+        <div class="w-card w-card-white hover-rotate fade-in s2" style="border-radius:16px;">
+          <div class="card-color-bar bar-orange"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🪡</span>
+            <h3 class="card-title">Tufting Workshop</h3>
+            <p class="card-desc">Create your own tufted pillow or wall art using a tufting gun. All skill levels welcome.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM150</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 3. Bead Keychains — pastel yellow, tilt -->
+        <div class="w-card w-card-pastel-yellow tilt-l hover-lift fade-in s3" style="border-radius:28px;">
+          <div class="card-color-bar bar-yellow"></div>
+          <div class="card-inner">
+            <span class="card-emoji">📿</span>
+            <h3 class="card-title">Bead Keychains</h3>
+            <p class="card-desc">String your own personalised bead keychain. Mix colours, spell your name, make it yours.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM35</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 4. Linocut Printing -->
+        <div class="w-card w-card-white hover-lift fade-in s4" style="border-radius:20px;">
+          <div class="card-color-bar bar-indigo"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🖨️</span>
+            <h3 class="card-title">Linocut Printing</h3>
+            <p class="card-desc">Carve your own stamp, roll the ink, press it. Ancient craft, modern fun.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM65</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 5. Ceramic Painting — pastel mint -->
+        <div class="w-card w-card-pastel-mint hover-scale fade-in s5" style="border-radius:24px;">
+          <div class="card-color-bar bar-green"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🏺</span>
+            <h3 class="card-title">Ceramic Painting</h3>
+            <p class="card-desc">Paint and glaze your own ceramic piece. No experience needed.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM60</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 6. Shrinky Keychains — wide, pink border, tilt -->
+        <div class="w-card w-card-white bento-wide tilt-r hover-lift fade-in s6" style="border-radius:16px;">
+          <div class="card-color-bar bar-pink"></div>
+          <div class="card-inner">
+            <span class="card-emoji">✂️</span>
+            <h3 class="card-title">Shrinky Keychains</h3>
+            <p class="card-desc">Draw, cut, bake and watch your design shrink into a tiny charm keychain.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM35</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa" style="max-width:220px;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 7. STEM & Robotics — lavender -->
+        <div class="w-card w-card-pastel-lavender hover-scale fade-in s1" style="border-radius:24px;">
+          <div class="card-color-bar bar-purple"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🤖</span>
+            <h3 class="card-title">STEM & Robotics DIY</h3>
+            <p class="card-desc">Build and programme your own mini robot. Perfect for kids and curious adults.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM80</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 8. Batik Painting — tilt right -->
+        <div class="w-card w-card-white tilt-r hover-lift fade-in s2" style="border-radius:20px;">
+          <div class="card-color-bar bar-green"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🎨</span>
+            <h3 class="card-title">Batik Painting</h3>
+            <p class="card-desc">Traditional Malaysian wax-resist dyeing technique. Make your own batik fabric piece.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM75</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 9. Pottery — peach -->
+        <div class="w-card w-card-pastel-peach hover-rotate fade-in s3" style="border-radius:28px;">
+          <div class="card-color-bar bar-orange"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🪣</span>
+            <h3 class="card-title">Pottery</h3>
+            <p class="card-desc">Throw your own pot on a wheel or hand-build a piece from clay.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM90</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 10. Sand Art -->
+        <div class="w-card w-card-white hover-lift fade-in s4" style="border-radius:16px;">
+          <div class="card-color-bar bar-blue"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🖼️</span>
+            <h3 class="card-title">Sand Art</h3>
+            <p class="card-desc">Layer coloured sand into a glass bottle to create your own unique landscape artwork.</p>
+            <div class="card-price"><span class="price-from">from&nbsp;</span><span class="price-amount">RM45</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+          </div>
+        </div>
+
+        <!-- 11. Tuft Gun Repair — white, flash hover -->
+        <div class="w-card w-card-white hover-flash fade-in s5" style="border-radius:24px;">
+          <div class="card-color-bar bar-red"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🔧</span>
+            <h3 class="card-title">Tuft Gun Repair</h3>
+            <p class="card-desc">We repair and service tufting guns. Drop off or mail in.</p>
+            <div class="card-price"><span class="price-custom">Custom quote</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Get a Quote</a>
+          </div>
+        </div>
+
+        <!-- 12. Corporate Teambuilding — wide, glow hover -->
+        <div class="w-card w-card-white bento-wide hover-glow fade-in s6" style="border-radius:24px;">
+          <div class="card-color-bar bar-rainbow" style="height:6px;"></div>
+          <div class="card-inner">
+            <span class="card-emoji">🏢</span>
+            <h3 class="card-title">Corporate Teambuilding</h3>
+            <p class="card-desc">Private workshops for your team. We customise the activity, you show up and have fun. Min 10 pax.</p>
+            <div class="card-price"><span class="price-custom">Custom quote</span></div>
+            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa" style="max-width:260px;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enquire Now</a>
+          </div>
+        </div>
+
+      </div><!-- end .bento -->
+    </div>
+  </section>
+
+
+  <!-- ======================== VIBE SECTION ======================== -->
+  <section id="vibe">
+    <div class="container">
+      <p class="vibe-label fade-in">why come to olo</p>
+      <div class="vibe-scatter">
+
+        <div class="vibe-item fade-in s1">
+          <span class="vibe-emoji">🎨</span>
+          <strong class="vibe-strong">all materials included</strong>
+          <span class="vibe-text">just show up. everything you need is already here.</span>
+        </div>
+
+        <div class="vibe-item fade-in s2">
+          <span class="vibe-emoji">👨‍👩‍👧</span>
+          <strong class="vibe-strong">all ages welcome</strong>
+          <span class="vibe-text">families, date nights, solo visits, team days — all good.</span>
+        </div>
+
+        <div class="vibe-item fade-in s3">
+          <span class="vibe-emoji">📍</span>
+          <strong class="vibe-strong">proudly in Penang</strong>
+          <span class="vibe-text">George Town. we also do pop-ups across Malaysia.</span>
+        </div>
+
+        <div class="vibe-item fade-in s4">
+          <span class="vibe-emoji">✅</span>
+          <strong class="vibe-strong">beginners welcome</strong>
+          <span class="vibe-text">seriously, zero experience needed. we guide you through it.</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== EVENTS BANNER ======================== -->
+  <section id="events">
+    <div class="rainbow-stripe-thick"></div>
+    <div class="events-banner">
+      <h2 class="events-banner-title fade-in">🎪 we do pop-ups too</h2>
+      <p class="events-banner-sub fade-in fade-in-delay-1">markets, fairs, festivals — we set up all over Malaysia. follow us to know where we'll be next.</p>
+      <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-outline-white fade-in fade-in-delay-2">
+        ask us on WhatsApp
+      </a>
+    </div>
+    <div class="rainbow-stripe-thick"></div>
+  </section>
+
+
+  <!-- ======================== FOLLOW US ======================== -->
+  <section id="follow">
+    <div class="container">
+      <h2 class="follow-title fade-in">see what people make 👀</h2>
+      <p class="follow-sub fade-in fade-in-delay-1">every piece is different. every visit is a little different too.</p>
+      <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="follow-handle fade-in fade-in-delay-2">
+        📸 @olostudio.my
+      </a>
+      <div class="follow-emojis fade-in fade-in-delay-3">🧸 🪡 🏺 📿 🎨 🖼️</div>
+    </div>
+  </section>
+
+
+  <!-- ======================== CONTACT ======================== -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-box fade-in">
+        <span class="contact-emoji">💬</span>
+        <h2 class="contact-title">ready to make something?</h2>
+        <p class="contact-sub">drop us a message on WhatsApp — we'll sort the rest.</p>
+
+        <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa-big">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat With Us on WhatsApp
+        </a>
+
+        <div class="contact-info">
+          <div class="contact-info-item">📍 Jalan Lenggong, Straits Garden, George Town, Penang</div>
+          <div class="contact-info-item">📸 @olostudio.my</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer>
+    <div class="footer-rainbow"></div>
+    <a href="#hero" class="footer-logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="34" height="34">
+        <circle cx="20" cy="20" r="20" fill="#C8E6F5"/>
+        <ellipse cx="20" cy="18" rx="11" ry="7" fill="white"/>
+        <circle cx="14" cy="16" r="5" fill="white"/>
+        <circle cx="20" cy="13" r="6" fill="white"/>
+        <circle cx="26" cy="16" r="4.5" fill="white"/>
+        <rect x="9" y="23" width="3.5" height="3.5" rx="1" fill="#EF4444"/>
+        <rect x="13" y="23" width="3.5" height="3.5" rx="1" fill="#F97316"/>
+        <rect x="17" y="23" width="3.5" height="3.5" rx="1" fill="#EAB308"/>
+        <rect x="21" y="23" width="3.5" height="3.5" rx="1" fill="#22C55E"/>
+        <rect x="25" y="23" width="3.5" height="3.5" rx="1" fill="#3B82F6"/>
+        <rect x="29" y="23" width="3.5" height="3.5" rx="1" fill="#A855F7"/>
+      </svg>
+      <span class="footer-logo-text">OLO STUDIO</span>
+    </a>
+    <p class="footer-copy">© 2025 OLO Studio. made with 🌈 in Penang.</p>
+  </footer>
+
+
+  <!-- ======================== JAVASCRIPT ======================== -->
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Mobile hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let menuOpen = false;
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      const spans = hamburger.querySelectorAll('span');
+      if (menuOpen) {
+        spans[0].style.transform = 'translateY(7.5px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-7.5px) rotate(-45deg)';
+      } else {
+        spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      }
+    });
+    function closeMobile() {
+      menuOpen = false;
+      mobileMenu.classList.remove('open');
+      hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+    document.addEventListener('click', (e) => {
+      if (menuOpen && !hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Hero elements on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('#hero .fade-in').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 80 + i * 130);
+      });
+    });
+
+    // Smooth anchor scroll with navbar offset
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 78, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
