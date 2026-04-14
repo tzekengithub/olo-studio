@@ -821,14 +821,15 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
+      background: rgba(0,0,0,0.48);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
     }
 
     .card-description {
       flex: 1;
       margin-bottom: 1.2em;
+      color: #fff !important;
       color: var(--text);
       font-size: 0.92em;
       line-height: 1.45;
@@ -849,10 +850,10 @@
       position: absolute;
       top: -0.8em; left: 50%;
       transform: translateX(-50%) rotate(90deg);
-      background: var(--bg);
+      background: transparent;
       padding: 0 0.5em;
       font-size: 1em;
-      color: rgba(0,0,0,0.35);
+      color: rgba(255,255,255,0.6);
     }
 
     .dots-pattern {
@@ -883,7 +884,7 @@
       position: absolute;
       bottom: 0; left: 0;
       width: 1.5em; height: 1.5em;
-      background: var(--bg);
+      background: rgba(0,0,0,0.48);
       border-right: 0.25em solid var(--text);
       border-top: 0.25em solid var(--text);
       border-radius: 0 0.5em 0 0;
