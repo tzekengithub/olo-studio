@@ -35,14 +35,14 @@ const WORKSHOPS: Workshop[] = [
     emoji: '🪡', title: 'Tufting Workshop',
     desc: 'Create your own tufted pillow or wall art using a tufting gun. All skill levels welcome.',
     price: 'from RM150', priceColor: '#F97316',
-    img: '/images/workshop-tufting.jpg', fallbackBg: '#FFF7ED',
+    img: '/images/workshop-tufting.png', fallbackBg: '#FFF7ED',
     wide: false, featured: false, radius: 16, extraClasses: 'hover-rotate', btn: 'Book Now', delay: 'delay-2',
   },
   {
     emoji: '📿', title: 'Bead Keychains',
     desc: 'String your own personalised bead keychain. Mix colours, spell your name, make it yours.',
     price: 'from RM35', priceColor: '#EAB308',
-    img: '/images/workshop-beads.jpg', fallbackBg: '#FFFBEB',
+    img: '/images/DIYbeads.png', fallbackBg: '#FFFBEB',
     wide: false, featured: false, radius: 28, extraClasses: 'tilt-l hover-lift', btn: 'Book Now', delay: 'delay-3',
   },
   {
@@ -91,7 +91,7 @@ const WORKSHOPS: Workshop[] = [
     emoji: '🖼️', title: 'Sand Art',
     desc: 'Layer coloured sand into a glass bottle to create your own unique landscape artwork.',
     price: 'from RM45', priceColor: '#3B82F6',
-    img: '/images/workshop-sandart.jpg', fallbackBg: '#EFF6FF',
+    img: '/images/sand-art-candle.jpg', fallbackBg: '#EFF6FF',
     wide: false, featured: false, radius: 16, extraClasses: 'hover-lift', btn: 'Book Now', delay: 'delay-2',
   },
   {
@@ -105,7 +105,7 @@ const WORKSHOPS: Workshop[] = [
     emoji: '🏢', title: 'Corporate Teambuilding',
     desc: 'Private workshops for your team. We customise the activity, you show up and have fun. Min 10 pax.',
     price: 'Custom quote', priceColor: '#A855F7',
-    img: '/images/workshop-corporate.jpg', fallbackBg: '#F5F3FF',
+    img: '/images/teambuildingolo.png', fallbackBg: '#F5F3FF',
     wide: true, featured: false, radius: 24, extraClasses: 'hover-lift', btn: 'Enquire Now', delay: 'delay-4',
   },
 ]
