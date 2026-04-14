@@ -673,96 +673,247 @@
     .s6 { transition-delay: 0.44s; }
 
     /* =============================================
-       PHOTO CARDS
+       WORKSHOP CARDS (neo-brutalist)
     ============================================= */
-    .w-card-photo {
+    .card {
+      --primary: #ff3e00;
+      --secondary: #25D366;
+      --secondary-hover: #1da851;
+      --accent: #00e0b0;
+      --text: #050505;
+      --bg: #ffffff;
+      --shadow-color: #000000;
+      --pattern-color: #cfcfcf;
+
       position: relative;
-      height: 320px;
-      display: block;
-    }
-
-    .w-card-photo .card-photo-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.4s ease;
-      z-index: 0;
-    }
-
-    .w-card-photo:hover .card-photo-img {
-      transform: scale(1.08);
-    }
-
-    .card-photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .card-photo-inner {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 18px 22px 22px;
-      z-index: 2;
+      background: var(--bg);
+      border: 0.35em solid var(--text);
+      border-radius: 0.6em;
+      box-shadow: 0.7em 0.7em 0 var(--shadow-color), inset 0 0 0 0.15em rgba(0,0,0,0.05);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      overflow: hidden;
+      font-family: 'Nunito', ui-sans-serif, sans-serif;
+      transform-origin: center;
       display: flex;
       flex-direction: column;
     }
 
-    .card-photo-inner .card-emoji { margin-bottom: 6px; font-size: 2.2rem; }
-    .card-photo-inner .card-title { color: #fff; margin-bottom: 5px; font-size: 1.2rem; }
-    .card-photo-inner .card-desc  { color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-bottom: 14px; line-height: 1.5; }
+    .card:hover {
+      transform: translate(-0.4em, -0.4em) scale(1.02);
+      box-shadow: 1em 1em 0 var(--shadow-color);
+    }
 
-    .card-price-badge {
+    .card:hover .card-pattern-grid,
+    .card:hover .card-overlay-dots { opacity: 1; }
+
+    .card:active {
+      transform: translate(0.1em, 0.1em) scale(0.98);
+      box-shadow: 0.5em 0.5em 0 var(--shadow-color);
+    }
+
+    .card::before {
+      content: "";
       position: absolute;
-      top: 14px;
-      right: 14px;
-      z-index: 3;
-      background: #fff;
-      border-radius: 999px;
-      padding: 4px 12px;
+      top: -1em; right: -1em;
+      width: 4em; height: 4em;
+      background: var(--accent);
+      transform: rotate(45deg);
+      z-index: 1;
+    }
+
+    .card::after {
+      content: "★";
+      position: absolute;
+      top: 0.4em; right: 0.4em;
+      color: var(--text);
+      font-size: 1.2em;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .card-pattern-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+      background-size: 0.5em 0.5em;
+      pointer-events: none;
+      opacity: 0.5;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+
+    .card-overlay-dots {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(var(--pattern-color) 1px, transparent 1px);
+      background-size: 1em 1em;
+      background-position: -0.5em -0.5em;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+
+    .bold-pattern {
+      position: absolute;
+      top: 0; right: 0;
+      width: 6em; height: 6em;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card-title-area {
+      position: relative;
+      padding: 1.2em 1.4em;
+      background: var(--primary);
+      color: var(--bg);
       font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      line-height: 1.5;
+      font-weight: 800;
+      font-size: 1.1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5em;
+      border-bottom: 0.35em solid var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      z-index: 2;
+      overflow: hidden;
     }
 
-    .badge-rainbow {
-      background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
-      color: #fff;
+    .card-title-area::before {
+      content: "";
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(45deg, rgba(0,0,0,0.1), rgba(0,0,0,0.1) 0.5em, transparent 0.5em, transparent 1em);
+      pointer-events: none;
+      opacity: 0.3;
     }
 
-    /* Featured card wrapper — rainbow border via gradient padding */
-    .featured-photo-wrap {
+    .card-tag {
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.58em;
+      font-weight: 800;
+      padding: 0.4em 0.8em;
+      border: 0.15em solid var(--text);
+      border-radius: 0.3em;
+      box-shadow: 0.2em 0.2em 0 var(--shadow-color);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transform: rotate(3deg);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card:hover .card-tag {
+      transform: rotate(-2deg) scale(1.1);
+    }
+
+    .card-body {
+      position: relative;
+      padding: 1.4em;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-description {
+      flex: 1;
+      margin-bottom: 1.2em;
+      color: var(--text);
+      font-size: 0.92em;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding-top: 1em;
+      border-top: 0.15em dashed rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .card-actions::before {
+      content: "✂";
+      position: absolute;
+      top: -0.8em; left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+      background: var(--bg);
+      padding: 0 0.5em;
+      font-size: 1em;
+      color: rgba(0,0,0,0.35);
+    }
+
+    .dots-pattern {
+      position: absolute;
+      bottom: 2em; left: -2em;
+      width: 8em; height: 4em;
+      opacity: 0.25;
+      transform: rotate(-10deg);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .accent-shape {
+      position: absolute;
+      width: 2.5em; height: 2.5em;
+      background: var(--secondary);
+      border: 0.15em solid var(--text);
+      border-radius: 0.3em;
+      transform: rotate(45deg);
+      bottom: -1.2em; right: 2em;
+      z-index: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .accent-shape { transform: rotate(55deg) scale(1.1); }
+
+    .corner-slice {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 1.5em; height: 1.5em;
+      background: var(--bg);
+      border-right: 0.25em solid var(--text);
+      border-top: 0.25em solid var(--text);
+      border-radius: 0 0.5em 0 0;
+      z-index: 3;
+    }
+
+    /* Tilt variants */
+    .card.tilt-l { transform: rotate(-1.1deg); }
+    .card.tilt-r { transform: rotate(0.9deg); }
+    .card.tilt-l:hover { transform: rotate(0deg) translate(-0.4em, -0.4em) scale(1.02); }
+    .card.tilt-r:hover { transform: rotate(0deg) translate(-0.4em, -0.4em) scale(1.02); }
+
+    /* Featured rainbow border wrapper */
+    .featured-wrap {
       padding: 3px;
-      border-radius: 35px;
+      border-radius: 0.7em;
       background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
-      box-shadow: 0 6px 28px rgba(30,58,95,0.09);
-      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0.7em 0.7em 0 #000;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    .featured-photo-wrap:hover {
-      transform: translateY(-9px);
-      box-shadow: 0 20px 50px rgba(30,58,95,0.18);
+    .featured-wrap:hover {
+      transform: translate(-0.4em, -0.4em);
+      box-shadow: 1em 1em 0 #000;
     }
 
-    .featured-photo-wrap:hover .card-photo-img {
-      transform: scale(1.08);
-    }
-
-    .featured-photo-wrap .w-card {
+    .featured-wrap .card {
       box-shadow: none;
-      width: 100%;
+      border-radius: 0.45em;
     }
 
     @media (max-width: 600px) {
-      .w-card-photo { height: 260px; }
+      .card { box-shadow: 0.4em 0.4em 0 #000; }
+      .card.tilt-l, .card.tilt-r { transform: none; }
+      .featured-wrap { box-shadow: 0.4em 0.4em 0 #000; }
     }
   </style>
 </head>
@@ -870,161 +1021,185 @@
       <div class="bento">
 
         <!-- 1. Build-A-Plushie — FEATURED, rainbow border, bento-wide -->
-        <div class="featured-photo-wrap bento-wide fade-in s1">
-          <div class="w-card w-card-photo" style="border-radius:32px; background-color:var(--navy);">
-            <img class="card-photo-img" src="public/images/workshop-plushie.jpg" alt="Build-A-Plushie workshop" onerror="this.style.display='none'">
-            <div class="card-photo-overlay"></div>
-            <div class="card-price-badge badge-rainbow">from RM98</div>
-            <div class="card-photo-inner">
-              <span class="card-emoji">🧸</span>
-              <h3 class="card-title">Build-A-Plushie</h3>
-              <p class="card-desc">Pick your character, stuff it, sew it, name it. Take home your new best friend.</p>
-              <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="featured-wrap bento-wide fade-in s1">
+          <div class="card" style="--primary:#1E3A5F; --accent:#C8E6F5;">
+            <div class="card-pattern-grid"></div>
+            <div class="card-overlay-dots"></div>
+            <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+            <div class="card-title-area"><span>🧸 Build-A-Plushie</span><span class="card-tag">from RM98</span></div>
+            <div class="card-body">
+              <div class="card-description">Pick your character, stuff it, sew it, name it. Take home your new best friend.</div>
+              <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
             </div>
+            <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+            <div class="accent-shape"></div>
+            <div class="corner-slice"></div>
           </div>
         </div>
 
         <!-- 2. Tufting Workshop -->
-        <div class="w-card w-card-photo hover-rotate fade-in s2" style="border-radius:16px; background-color:#FFF7ED;">
-          <img class="card-photo-img" src="public/images/workshop-tufting.png" alt="Tufting Workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--orange);">from RM150</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🪡</span>
-            <h3 class="card-title">Tufting Workshop</h3>
-            <p class="card-desc">Create your own tufted pillow or wall art using a tufting gun. All skill levels welcome.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card fade-in s2" style="--primary:#F97316; --accent:#FED7AA;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🪡 Tufting Workshop</span><span class="card-tag">from RM150</span></div>
+          <div class="card-body">
+            <div class="card-description">Create your own tufted pillow or wall art using a tufting gun. All skill levels welcome.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 3. Bead Keychains — tilt left -->
-        <div class="w-card w-card-photo tilt-l hover-lift fade-in s3" style="border-radius:28px; background-color:#FFFBEB;">
-          <img class="card-photo-img" src="public/images/DIYbeads.png" alt="Bead Keychains workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--yellow);">from RM35</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">📿</span>
-            <h3 class="card-title">Bead Keychains</h3>
-            <p class="card-desc">String your own personalised bead keychain. Mix colours, spell your name, make it yours.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card tilt-l fade-in s3" style="--primary:#CA8A04; --accent:#FEF08A;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>📿 Bead Keychains</span><span class="card-tag">from RM35</span></div>
+          <div class="card-body">
+            <div class="card-description">String your own personalised bead keychain. Mix colours, spell your name, make it yours.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 4. Linocut Printing -->
-        <div class="w-card w-card-photo hover-lift fade-in s4" style="border-radius:20px; background-color:#EEF2FF;">
-          <img class="card-photo-img" src="public/images/workshop-linocut.jpg" alt="Linocut Printing workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--indigo);">from RM65</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🖨️</span>
-            <h3 class="card-title">Linocut Printing</h3>
-            <p class="card-desc">Carve your own stamp, roll the ink, press it. Ancient craft, modern fun.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card fade-in s4" style="--primary:#6366F1; --accent:#C7D2FE;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🖨️ Linocut Printing</span><span class="card-tag">from RM65</span></div>
+          <div class="card-body">
+            <div class="card-description">Carve your own stamp, roll the ink, press it. Ancient craft, modern fun.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 5. Ceramic Painting -->
-        <div class="w-card w-card-photo hover-scale fade-in s5" style="border-radius:24px; background-color:#ECFDF5;">
-          <img class="card-photo-img" src="public/images/workshop-ceramic.jpg" alt="Ceramic Painting workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--green);">from RM60</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🏺</span>
-            <h3 class="card-title">Ceramic Painting</h3>
-            <p class="card-desc">Paint and glaze your own ceramic piece. No experience needed.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card fade-in s5" style="--primary:#16A34A; --accent:#BBF7D0;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🏺 Ceramic Painting</span><span class="card-tag">from RM60</span></div>
+          <div class="card-body">
+            <div class="card-description">Paint and glaze your own ceramic piece. No experience needed.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 6. Shrinky Keychains — bento-wide, tilt right -->
-        <div class="w-card w-card-photo bento-wide tilt-r hover-lift fade-in s6" style="border-radius:16px; background-color:#FDF2F8;">
-          <img class="card-photo-img" src="public/images/workshop-shrinky.jpg" alt="Shrinky Keychains workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:#F472B6;">from RM35</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">✂️</span>
-            <h3 class="card-title">Shrinky Keychains</h3>
-            <p class="card-desc">Draw, cut, bake and watch your design shrink into a tiny charm keychain.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card bento-wide tilt-r fade-in s6" style="--primary:#DB2777; --accent:#FBCFE8;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>✂️ Shrinky Keychains</span><span class="card-tag">from RM35</span></div>
+          <div class="card-body">
+            <div class="card-description">Draw, cut, bake and watch your design shrink into a tiny charm keychain.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 7. STEM & Robotics -->
-        <div class="w-card w-card-photo hover-scale fade-in s1" style="border-radius:24px; background-color:#F5F3FF;">
-          <img class="card-photo-img" src="public/images/workshop-stem.jpg" alt="STEM and Robotics workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--purple);">from RM80</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🤖</span>
-            <h3 class="card-title">STEM & Robotics DIY</h3>
-            <p class="card-desc">Build and programme your own mini robot. Perfect for kids and curious adults.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card fade-in s1" style="--primary:#7C3AED; --accent:#DDD6FE;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🤖 STEM &amp; Robotics</span><span class="card-tag">from RM80</span></div>
+          <div class="card-body">
+            <div class="card-description">Build and programme your own mini robot. Perfect for kids and curious adults.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 8. Batik Painting — tilt right -->
-        <div class="w-card w-card-photo tilt-r hover-lift fade-in s2" style="border-radius:20px; background-color:#F0FDF4;">
-          <img class="card-photo-img" src="public/images/workshop-batik.jpg" alt="Batik Painting workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--green);">from RM75</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🎨</span>
-            <h3 class="card-title">Batik Painting</h3>
-            <p class="card-desc">Traditional Malaysian wax-resist dyeing technique. Make your own batik fabric piece.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card tilt-r fade-in s2" style="--primary:#15803D; --accent:#BBF7D0;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🎨 Batik Painting</span><span class="card-tag">from RM75</span></div>
+          <div class="card-body">
+            <div class="card-description">Traditional Malaysian wax-resist dyeing technique. Make your own batik fabric piece.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 9. Pottery -->
-        <div class="w-card w-card-photo hover-rotate fade-in s3" style="border-radius:28px; background-color:#FFF7ED;">
-          <img class="card-photo-img" src="public/images/workshop-pottery.jpg" alt="Pottery workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--orange);">from RM90</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🪣</span>
-            <h3 class="card-title">Pottery</h3>
-            <p class="card-desc">Throw your own pot on a wheel or hand-build a piece from clay.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card fade-in s3" style="--primary:#EA580C; --accent:#FED7AA;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🪣 Pottery</span><span class="card-tag">from RM90</span></div>
+          <div class="card-body">
+            <div class="card-description">Throw your own pot on a wheel or hand-build a piece from clay.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 10. Sand Art -->
-        <div class="w-card w-card-photo hover-lift fade-in s4" style="border-radius:16px; background-color:#EFF6FF;">
-          <img class="card-photo-img" src="public/images/sand-art-candle.jpg" alt="Sand Art workshop" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--blue);">from RM45</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🖼️</span>
-            <h3 class="card-title">Sand Art</h3>
-            <p class="card-desc">Layer coloured sand into a glass bottle to create your own unique landscape artwork.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a>
+        <div class="card fade-in s4" style="--primary:#2563EB; --accent:#BFDBFE;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🖼️ Sand Art</span><span class="card-tag">from RM45</span></div>
+          <div class="card-body">
+            <div class="card-description">Layer coloured sand into a glass bottle to create your own unique landscape artwork.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Book Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 11. Tuft Gun Repair -->
-        <div class="w-card w-card-photo hover-flash fade-in s5" style="border-radius:24px; background-color:#FEF2F2;">
-          <img class="card-photo-img" src="public/images/workshop-repair.jpg" alt="Tuft Gun Repair service" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--red);">Custom quote</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🔧</span>
-            <h3 class="card-title">Tuft Gun Repair</h3>
-            <p class="card-desc">We repair and service tufting guns. Drop off or mail in.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Get a Quote</a>
+        <div class="card fade-in s5" style="--primary:#DC2626; --accent:#FECACA;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🔧 Tuft Gun Repair</span><span class="card-tag">Custom quote</span></div>
+          <div class="card-body">
+            <div class="card-description">We repair and service tufting guns. Drop off or mail in.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Get a Quote</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
         <!-- 12. Corporate Teambuilding — bento-wide -->
-        <div class="w-card w-card-photo bento-wide hover-glow fade-in s6" style="border-radius:24px; background-color:#F5F3FF;">
-          <img class="card-photo-img" src="public/images/teambuildingolo.png" alt="Corporate Teambuilding" onerror="this.style.display='none'">
-          <div class="card-photo-overlay"></div>
-          <div class="card-price-badge" style="color:var(--purple);">Custom quote</div>
-          <div class="card-photo-inner">
-            <span class="card-emoji">🏢</span>
-            <h3 class="card-title">Corporate Teambuilding</h3>
-            <p class="card-desc">Private workshops for your team. We customise the activity, you show up and have fun. Min 10 pax.</p>
-            <a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enquire Now</a>
+        <div class="card bento-wide fade-in s6" style="--primary:#7C3AED; --accent:#DDD6FE;">
+          <div class="card-pattern-grid"></div>
+          <div class="card-overlay-dots"></div>
+          <div class="bold-pattern"><svg viewBox="0 0 100 100"><path stroke-dasharray="15 10" stroke-width="10" stroke="#000" fill="none" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg></div>
+          <div class="card-title-area"><span>🏢 Corporate Teambuilding</span><span class="card-tag">Custom quote</span></div>
+          <div class="card-body">
+            <div class="card-description">Private workshops for your team. We customise the activity, you show up and have fun. Min 10 pax.</div>
+            <div class="card-actions"><a href="https://wa.me/60103575509?text=Hi%20OLO%20Studio!%20I'd%20like%20to%20book%20a%20workshop%20%F0%9F%98%8A" target="_blank" rel="noopener" class="btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enquire Now</a></div>
           </div>
+          <div class="dots-pattern"><svg viewBox="0 0 80 40"><circle fill="#000" r="3" cy="10" cx="10"/><circle fill="#000" r="3" cy="10" cx="30"/><circle fill="#000" r="3" cy="10" cx="50"/><circle fill="#000" r="3" cy="10" cx="70"/><circle fill="#000" r="3" cy="20" cx="20"/><circle fill="#000" r="3" cy="20" cx="40"/><circle fill="#000" r="3" cy="20" cx="60"/><circle fill="#000" r="3" cy="30" cx="10"/><circle fill="#000" r="3" cy="30" cx="30"/><circle fill="#000" r="3" cy="30" cx="50"/><circle fill="#000" r="3" cy="30" cx="70"/></svg></div>
+          <div class="accent-shape"></div>
+          <div class="corner-slice"></div>
         </div>
 
       </div><!-- end .bento -->
