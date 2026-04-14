@@ -37,6 +37,11 @@
     body {
       font-family: 'Nunito', sans-serif;
       background-color: var(--sky);
+      background-image: url('/images/website%20background%20olo%20(2).png');
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
       color: var(--text-dark);
       overflow-x: hidden;
       line-height: 1.6;
@@ -668,297 +673,96 @@
     .s6 { transition-delay: 0.44s; }
 
     /* =============================================
-       NEO-BRUTALIST WORKSHOP CARDS
+       PHOTO CARDS
     ============================================= */
-
-    .w-card-nb {
+    .w-card-photo {
       position: relative;
-      background: var(--white);
-      border: 0.28em solid var(--navy);
-      border-radius: 0.6em;
-      box-shadow: 0.55em 0.55em 0 var(--navy);
-      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      height: 320px;
+      display: block;
     }
 
-    .w-card-nb:hover {
-      transform: translate(-0.35em, -0.35em);
-      box-shadow: 0.95em 0.95em 0 var(--navy);
-    }
-
-    .w-card-nb:active {
-      transform: translate(0.08em, 0.08em);
-      box-shadow: 0.35em 0.35em 0 var(--navy);
-    }
-
-    /* Tilt variants */
-    .w-card-nb.tilt-l { transform: rotate(-1.1deg); }
-    .w-card-nb.tilt-r { transform: rotate(0.9deg); }
-    .w-card-nb.tilt-l:hover, .w-card-nb.tilt-r:hover {
-      transform: rotate(0deg) translate(-0.35em, -0.35em);
-      box-shadow: 0.95em 0.95em 0 var(--navy);
-    }
-
-    /* Corner accent diamond + star */
-    .w-card-nb::before {
-      content: "";
+    .w-card-photo .card-photo-img {
       position: absolute;
-      top: -0.8em; right: -0.8em;
-      width: 2.8em; height: 2.8em;
-      background: var(--card-accent, var(--sky));
-      transform: rotate(45deg);
-      z-index: 3;
-    }
-
-    .w-card-nb::after {
-      content: "★";
-      position: absolute;
-      top: 0.28em; right: 0.24em;
-      color: var(--navy);
-      font-size: 0.88em;
-      font-weight: 900;
-      z-index: 4;
-      line-height: 1;
-    }
-
-    /* Pattern grid (always faint, brighter on hover) */
-    .nb-pattern-grid {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
-      background-size: 0.5em 0.5em;
-      pointer-events: none;
-      opacity: 0.5;
-      transition: opacity 0.4s ease;
-      z-index: 1;
-    }
-
-    /* Dot overlay (appears on hover) */
-    .nb-overlay-dots {
-      position: absolute; inset: 0;
-      background-image: radial-gradient(rgba(30,58,95,0.1) 1.5px, transparent 1.5px);
-      background-size: 1em 1em;
-      background-position: -0.5em -0.5em;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 1;
-    }
-
-    .w-card-nb:hover .nb-pattern-grid { opacity: 1; }
-    .w-card-nb:hover .nb-overlay-dots { opacity: 1; }
-
-    /* Coloured title bar */
-    .nb-title-area {
-      position: relative;
-      padding: 0.85em 1em;
-      background: var(--card-color, var(--sky));
-      border-bottom: 0.22em solid var(--navy);
-      display: flex;
-      align-items: center;
-      gap: 0.55em;
-      z-index: 2;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    /* Diagonal stripe texture */
-    .nb-title-area::before {
-      content: "";
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(0,0,0,0.05),
-        rgba(0,0,0,0.05) 0.4em,
-        transparent 0.4em,
-        transparent 0.85em
-      );
-      pointer-events: none;
-      opacity: 0.45;
-    }
-
-    .nb-emoji {
-      font-size: 1.75em;
-      line-height: 1;
-      position: relative;
-      z-index: 1;
-      flex-shrink: 0;
-    }
-
-    .nb-title-text {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.05em;
-      font-weight: 700;
-      color: var(--navy);
-      position: relative;
-      z-index: 1;
-      flex: 1;
-      line-height: 1.2;
-    }
-
-    /* Rotated price badge */
-    .nb-price-tag {
-      background: var(--white);
-      color: var(--navy);
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.68em;
-      font-weight: 700;
-      padding: 0.3em 0.65em;
-      border: 0.15em solid var(--navy);
-      border-radius: 0.3em;
-      box-shadow: 0.18em 0.18em 0 var(--navy);
-      transform: rotate(3deg);
-      transition: all 0.3s ease;
-      white-space: nowrap;
-      position: relative;
-      z-index: 1;
-      flex-shrink: 0;
-    }
-
-    .w-card-nb:hover .nb-price-tag {
-      transform: rotate(-2deg) scale(1.1);
-    }
-
-    /* Card body */
-    .nb-body {
-      position: relative;
-      padding: 0.95em 1em;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      z-index: 2;
-    }
-
-    .nb-desc {
-      font-size: 0.87em;
-      color: var(--text-sub);
-      line-height: 1.5;
-      font-weight: 500;
-      flex: 1;
-      margin-bottom: 0.8em;
-    }
-
-    /* Dashed divider row with scissors */
-    .nb-actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding-top: 0.7em;
-      border-top: 0.12em dashed rgba(0,0,0,0.18);
-      position: relative;
-    }
-
-    .nb-actions::before {
-      content: "✂";
-      position: absolute;
-      top: -0.62em; left: 50%;
-      transform: translateX(-50%) rotate(90deg);
-      background: var(--white);
-      padding: 0 0.3em;
-      font-size: 0.85em;
-      color: rgba(0,0,0,0.28);
-    }
-
-    /* WhatsApp button — neo-brutalist style */
-    .nb-btn-wa {
-      display: flex;
-      align-items: center;
-      gap: 0.45em;
-      background: #25D366;
-      color: var(--white);
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.88em;
-      font-weight: 700;
-      padding: 0.5em 0.95em;
-      border: 0.18em solid var(--navy);
-      border-radius: 0.4em;
-      box-shadow: 0.22em 0.22em 0 var(--navy);
-      text-decoration: none;
-      transition: all 0.2s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .nb-btn-wa::before {
-      content: "";
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
-      transition: left 0.55s ease;
-    }
-
-    .nb-btn-wa:hover {
-      transform: translate(-0.1em, -0.1em);
-      box-shadow: 0.32em 0.32em 0 var(--navy);
-    }
-
-    .nb-btn-wa:hover::before { left: 100%; }
-
-    .nb-btn-wa:active {
-      transform: translate(0.06em, 0.06em);
-      box-shadow: 0.1em 0.1em 0 var(--navy);
-    }
-
-    .nb-btn-wa svg { width: 0.95em; height: 0.95em; fill: currentColor; }
-
-    /* Decorative rotated diamond accent */
-    .nb-accent-shape {
-      position: absolute;
-      width: 2em; height: 2em;
-      background: var(--card-color, var(--sky));
-      border: 0.15em solid var(--navy);
-      border-radius: 0.2em;
-      transform: rotate(45deg);
-      bottom: -0.95em; right: 1.6em;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.4s ease;
       z-index: 0;
-      transition: transform 0.3s ease;
     }
 
-    .w-card-nb:hover .nb-accent-shape {
-      transform: rotate(55deg) scale(1.1);
+    .w-card-photo:hover .card-photo-img {
+      transform: scale(1.08);
     }
 
-    /* Bottom-left corner notch */
-    .nb-corner-slice {
+    .card-photo-overlay {
       position: absolute;
-      bottom: 0; left: 0;
-      width: 1.15em; height: 1.15em;
-      background: var(--white);
-      border-right: 0.2em solid var(--navy);
-      border-top: 0.2em solid var(--navy);
-      border-radius: 0 0.4em 0 0;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .card-photo-inner {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 18px 22px 22px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-photo-inner .card-emoji { margin-bottom: 6px; font-size: 2.2rem; }
+    .card-photo-inner .card-title { color: #fff; margin-bottom: 5px; font-size: 1.2rem; }
+    .card-photo-inner .card-desc  { color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-bottom: 14px; line-height: 1.5; }
+
+    .card-price-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
       z-index: 3;
+      background: #fff;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      line-height: 1.5;
     }
 
-    /* Featured card rainbow border wrapper */
-    .featured-nb-wrap {
-      padding: 3px;
-      border-radius: 0.7em;
+    .badge-rainbow {
       background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
-      box-shadow: 0.55em 0.55em 0 var(--navy);
-      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      color: #fff;
     }
 
-    .featured-nb-wrap:hover {
-      transform: translate(-0.35em, -0.35em);
-      box-shadow: 0.95em 0.95em 0 var(--navy);
+    /* Featured card wrapper — rainbow border via gradient padding */
+    .featured-photo-wrap {
+      padding: 3px;
+      border-radius: 35px;
+      background: linear-gradient(90deg, #EF4444, #F97316, #EAB308, #22C55E, #3B82F6, #6366F1, #A855F7);
+      box-shadow: 0 6px 28px rgba(30,58,95,0.09);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .featured-nb-wrap .w-card-nb {
+    .featured-photo-wrap:hover {
+      transform: translateY(-9px);
+      box-shadow: 0 20px 50px rgba(30,58,95,0.18);
+    }
+
+    .featured-photo-wrap:hover .card-photo-img {
+      transform: scale(1.08);
+    }
+
+    .featured-photo-wrap .w-card {
       box-shadow: none;
-      border-radius: 0.52em;
+      width: 100%;
     }
 
     @media (max-width: 600px) {
-      .w-card-nb { box-shadow: 0.4em 0.4em 0 var(--navy); }
-      .w-card-nb.tilt-l, .w-card-nb.tilt-r { transform: none; }
-      .featured-nb-wrap { box-shadow: 0.4em 0.4em 0 var(--navy); }
+      .w-card-photo { height: 260px; }
     }
   </style>
 </head>
@@ -1082,7 +886,7 @@
 
         <!-- 2. Tufting Workshop -->
         <div class="w-card w-card-photo hover-rotate fade-in s2" style="border-radius:16px; background-color:#FFF7ED;">
-          <img class="card-photo-img" src="images/workshop-tufting.jpg" alt="Tufting Workshop" onerror="this.style.display='none'">
+          <img class="card-photo-img" src="images/workshop-tufting.png" alt="Tufting Workshop" onerror="this.style.display='none'">
           <div class="card-photo-overlay"></div>
           <div class="card-price-badge" style="color:var(--orange);">from RM150</div>
           <div class="card-photo-inner">
@@ -1095,7 +899,7 @@
 
         <!-- 3. Bead Keychains — tilt left -->
         <div class="w-card w-card-photo tilt-l hover-lift fade-in s3" style="border-radius:28px; background-color:#FFFBEB;">
-          <img class="card-photo-img" src="images/workshop-beads.jpg" alt="Bead Keychains workshop" onerror="this.style.display='none'">
+          <img class="card-photo-img" src="images/DIYbeads.png" alt="Bead Keychains workshop" onerror="this.style.display='none'">
           <div class="card-photo-overlay"></div>
           <div class="card-price-badge" style="color:var(--yellow);">from RM35</div>
           <div class="card-photo-inner">
@@ -1186,7 +990,7 @@
 
         <!-- 10. Sand Art -->
         <div class="w-card w-card-photo hover-lift fade-in s4" style="border-radius:16px; background-color:#EFF6FF;">
-          <img class="card-photo-img" src="images/workshop-sandart.jpg" alt="Sand Art workshop" onerror="this.style.display='none'">
+          <img class="card-photo-img" src="images/sand-art-candle.jpg" alt="Sand Art workshop" onerror="this.style.display='none'">
           <div class="card-photo-overlay"></div>
           <div class="card-price-badge" style="color:var(--blue);">from RM45</div>
           <div class="card-photo-inner">
@@ -1212,7 +1016,7 @@
 
         <!-- 12. Corporate Teambuilding — bento-wide -->
         <div class="w-card w-card-photo bento-wide hover-glow fade-in s6" style="border-radius:24px; background-color:#F5F3FF;">
-          <img class="card-photo-img" src="images/workshop-corporate.jpg" alt="Corporate Teambuilding" onerror="this.style.display='none'">
+          <img class="card-photo-img" src="images/teambuildingolo.png" alt="Corporate Teambuilding" onerror="this.style.display='none'">
           <div class="card-photo-overlay"></div>
           <div class="card-price-badge" style="color:var(--purple);">Custom quote</div>
           <div class="card-photo-inner">
